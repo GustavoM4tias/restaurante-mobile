@@ -8,6 +8,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  shared_preferences:
+  sqflite:
+  path: 
   cupertino_icons: ^1.0.2
   go_router: ^10.1.2
 

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_login_app/services/preferences_service.dart';
 import 'router/app_router.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized(); 
+  await PreferencesService.init();
+  
   runApp(MyApp());
 }
 
