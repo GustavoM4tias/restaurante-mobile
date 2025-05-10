@@ -4,7 +4,6 @@ import 'package:path/path.dart';
 class DatabaseHelper {
   static const String _dbName = 'eatzy_database.db'; 
   static const int _dbVersion = 1; 
-
   static DatabaseHelper? _instance; 
   static Database? _database; 
 
