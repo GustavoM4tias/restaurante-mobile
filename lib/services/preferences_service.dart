@@ -56,8 +56,9 @@ class PreferencesService {
         : null;
   }
 
-
   Future<bool> clearAllPreferences() async {
     return await _preferences?.clear() ?? false;
   }
+
+  static getToken() {}
 }

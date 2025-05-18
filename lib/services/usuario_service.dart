@@ -1,43 +1,45 @@
 import 'dart:convert';
-import 'api_client.dart';
+import 'package:flutter/material.dart';
 import '../models/usuario.dart';
+import '../services/api_client.dart';
 
-class UsuarioService {
+class UsuarioService extends ChangeNotifier {
   final ApiClient _apiClient = ApiClient();
 
-  Future<T> _retry<T>(Future<T> Function() request, {int retries = 3}) async {
-    for (int attempt = 0; attempt < retries; attempt++) {
-      try {
-        return await request();
-      } catch (e) {
-        if (attempt == retries - 1) rethrow;
-        await Future.delayed(Duration(seconds: 2));
-      }
-    }
-    throw Exception('Falha após $retries tentativas');
-  }
+  List<Usuario> _usuarios = [];
+  bool _isLoading = false;
+  String? _errorMessage;
 
-  Future<List<Usuario>> getUsuarios() async {
-    return await _retry(() async {
+  List<Usuario> get usuarios => _usuarios;
+  bool get isLoading => _isLoading;
+  String? get errorMessage => _errorMessage;
+
+  Future<void> fetchUsuarios() async {
+    _isLoading = true;
+    _errorMessage = null;
+    notifyListeners();
+
+    try {
       final response = await _apiClient.get('/usuarios');
       final data = jsonDecode(response.body) as List;
-      return data.map((json) => Usuario.fromJson(json)).toList();
-    });
+      _usuarios = data.map((json) => Usuario.fromJson(json)).toList();
+    } catch (e) {
+      _errorMessage = 'Erro ao carregar usuários: $e';
+    }
+
+    _isLoading = false;
+    notifyListeners();
   }
 
   Future<Usuario> getUsuarioPorId(int id) async {
-    return await _retry(() async {
-      final response = await _apiClient.get('/usuarios/$id');
-      final data = jsonDecode(response.body) as Map<String, dynamic>;
-      return Usuario.fromJson(data);
-    });
+    final response = await _apiClient.get('/usuarios/$id');
+    final data = jsonDecode(response.body);
+    return Usuario.fromJson(data);
   }
 
   Future<Usuario> criarUsuario(Usuario usuario) async {
-    return await _retry(() async {
-      final response = await _apiClient.post('/usuarios', usuario.toJson());
-      final data = jsonDecode(response.body) as Map<String, dynamic>;
-      return Usuario.fromJson(data);
-    });
+    final response = await _apiClient.post('/usuarios', usuario.toJson());
+    final data = jsonDecode(response.body);
+    return Usuario.fromJson(data);
   }
 }

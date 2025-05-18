@@ -1,35 +1,41 @@
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'api_client.dart';
 import '../models/avaliacao.dart';
+import 'preferences_service.dart';
 
-class AvaliacaoService {
-  final ApiClient _apiClient = ApiClient();
+class AvaliacaoService extends ChangeNotifier {
+  List<Avaliacao> _avaliacoes = [];
+  bool _isLoading = false;
+  String? _errorMessage;
 
-  Future<T> _retry<T>(Future<T> Function() request, {int retries = 3}) async {
-    for (int attempt = 0; attempt < retries; attempt++) {
-      try {
-        return await request();
-      } catch (e) {
-        if (attempt == retries - 1) rethrow;
-        await Future.delayed(Duration(seconds: 2));
+  List<Avaliacao> get avaliacoes => _avaliacoes;
+  bool get isLoading => _isLoading;
+  String? get errorMessage => _errorMessage;
+
+  Future<void> fetchAvaliacoes() async {
+    _isLoading = true;
+    _errorMessage = null;
+    notifyListeners();
+
+    try {
+      final token = await PreferencesService.getToken();
+      final response = await http.get(
+        Uri.parse('https://api.restaurante.com/avaliacoes'),
+        headers: {'Authorization': 'Bearer $token'},
+      );
+
+      if (response.statusCode == 200) {
+        final List jsonData = json.decode(response.body);
+        _avaliacoes = jsonData.map((e) => Avaliacao.fromJson(e)).toList();
+      } else {
+        _errorMessage = 'Erro ${response.statusCode}: ${response.reasonPhrase}';
       }
+    } catch (e) {
+      _errorMessage = 'Erro de conexão: $e';
     }
-    throw Exception('Falha após $retries tentativas');
-  }
 
-  Future<List<Avaliacao>> getAvaliacoes() async {
-    return await _retry(() async {
-      final response = await _apiClient.get('/avaliacoes');
-      final data = jsonDecode(response.body) as List;
-      return data.map((json) => Avaliacao.fromJson(json)).toList();
-    });
-  }
-
-  Future<Avaliacao> criarAvaliacao(Avaliacao avaliacao) async {
-    return await _retry(() async {
-      final response = await _apiClient.post('/avaliacoes', avaliacao.toJson());
-      final data = jsonDecode(response.body) as Map<String, dynamic>;
-      return Avaliacao.fromJson(data);
-    });
+    _isLoading = false;
+    notifyListeners();
   }
 }

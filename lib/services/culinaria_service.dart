@@ -1,27 +1,42 @@
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'api_client.dart';
+
 import '../models/culinaria.dart';
+import 'preferences_service.dart';
 
-class CulinariaService {
-  final ApiClient _apiClient = ApiClient();
+class CulinariaService extends ChangeNotifier {
+  List<Culinaria> _culinarias = [];
+  bool _isLoading = false;
+  String? _errorMessage;
 
-  Future<T> _retry<T>(Future<T> Function() request, {int retries = 3}) async {
-    for (int attempt = 0; attempt < retries; attempt++) {
-      try {
-        return await request();
-      } catch (e) {
-        if (attempt == retries - 1) rethrow;
-        await Future.delayed(Duration(seconds: 2));
+  List<Culinaria> get culinarias => _culinarias;
+  bool get isLoading => _isLoading;
+  String? get errorMessage => _errorMessage;
+
+  Future<void> fetchCulinarias() async {
+    _isLoading = true;
+    _errorMessage = null;
+    notifyListeners();
+
+    try {
+      final token = await PreferencesService.getToken();
+      final response = await http.get(
+        Uri.parse('https://api.restaurante.com/culinarias'),
+        headers: {'Authorization': 'Bearer $token'},
+      );
+
+      if (response.statusCode == 200) {
+        final List jsonData = json.decode(response.body);
+        _culinarias = jsonData.map((e) => Culinaria.fromJson(e)).toList();
+      } else {
+        _errorMessage = 'Erro ${response.statusCode}: ${response.reasonPhrase}';
       }
+    } catch (e) {
+      _errorMessage = 'Erro de conexão: $e';
     }
-    throw Exception('Falha após $retries tentativas');
-  }
 
-  Future<List<Culinaria>> getCulinarias() async {
-    return await _retry(() async {
-      final response = await _apiClient.get('/culinarias');
-      final data = jsonDecode(response.body) as List;
-      return data.map((json) => Culinaria.fromJson(json)).toList();
-    });
+    _isLoading = false;
+    notifyListeners();
   }
 }
