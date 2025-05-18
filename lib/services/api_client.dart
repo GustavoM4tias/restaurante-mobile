@@ -14,15 +14,12 @@ class ApiClient {
 
   ApiClient._internal();
 
-  Future<http.Response> get(
-    String endpoint, {
-    Map<String, String>? headers,
-  }) async {
+  Future<dynamic> get(String endpoint, {Map<String, String>? headers}) async {
     final uri = Uri.parse('$baseUrl$endpoint');
     try {
       final response = await http.get(uri, headers: _mergeHeaders(headers));
       _handleErrors(response);
-      return response;
+      return jsonDecode(response.body);
     } catch (e) {
       throw Exception('Erro ao fazer GET: $e');
     }

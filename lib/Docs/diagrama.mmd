@@ -1,0 +1,17 @@
+flowchart LR
+  subgraph App_Flutter ["App Flutter"]
+    UI[UI / State Management]
+    Svc[Services]
+    ApiClientNode[ApiClient]
+  end
+  subgraph Back_End ["Back-end"]
+    REST[REST API Server]
+    DB[(Banco de Dados)]
+  end
+  UI --> |"ação do usuário"| Svc
+  Svc --> |"chama métodos"| ApiClientNode
+  ApiClientNode --> |"requisição HTTP"| REST
+  REST --> |"consulta/atualiza"| DB
+  REST --> |"responde"| ApiClientNode
+  ApiClientNode --> |"retorna dados"| Svc
+  Svc --> |"atualiza estado"| UI
