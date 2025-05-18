@@ -38,4 +38,6 @@ class AvaliacaoService extends ChangeNotifier {
     _isLoading = false;
     notifyListeners();
   }
+
+  getAvaliacoes() {}
 }

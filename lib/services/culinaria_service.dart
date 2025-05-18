@@ -39,4 +39,6 @@ class CulinariaService extends ChangeNotifier {
     _isLoading = false;
     notifyListeners();
   }
+
+  getCulinarias() {}
 }

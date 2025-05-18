@@ -42,4 +42,6 @@ class UsuarioService extends ChangeNotifier {
     final data = jsonDecode(response.body);
     return Usuario.fromJson(data);
   }
+
+  getUsuarios() {}
 }

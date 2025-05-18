@@ -3,6 +3,9 @@ import 'package:flutter_login_app/services/preferences_service.dart';
 import 'package:provider/provider.dart';
 import 'router/app_router.dart';
 import 'providers/restaurante_provider.dart';
+import 'providers/culinaria_provider.dart';
+import 'providers/avaliacao_provider.dart';
+import 'providers/usuario_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -12,7 +15,9 @@ Future<void> main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => RestauranteProvider()),
-        // Adicione outros providers aqui quando criarmos
+        ChangeNotifierProvider(create: (_) => CulinariaProvider()),
+        ChangeNotifierProvider(create: (_) => AvaliacaoProvider()),
+        ChangeNotifierProvider(create: (_) => UsuarioProvider()),
       ],
       child: MyApp(),
     ),
