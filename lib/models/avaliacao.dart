@@ -15,7 +15,18 @@ class Avaliacao {
     required this.data,
   });
 
-  Map<String, dynamic> toMap() {
+  factory Avaliacao.fromJson(Map<String, dynamic> json) {
+    return Avaliacao(
+      id_avaliacao: json['id_avaliacao'],
+      id_usuario: json['id_usuario'],
+      id_restaurante: json['id_restaurante'],
+      nota: json['nota'],
+      comentario: json['comentario'],
+      data: json['data'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
     return {
       'id_avaliacao': id_avaliacao,
       'id_usuario': id_usuario,
@@ -24,34 +35,5 @@ class Avaliacao {
       'comentario': comentario,
       'data': data,
     };
-  }
-
-  factory Avaliacao.fromMap(Map<String, dynamic> map) {
-    return Avaliacao(
-      id_avaliacao: map['id_avaliacao'],
-      id_usuario: map['id_usuario'],
-      id_restaurante: map['id_restaurante'],
-      nota: map['nota'],
-      comentario: map['comentario'],
-      data: map['data'],
-    );
-  }
-
-  Avaliacao copyWith({
-    int? id_avaliacao,
-    int? id_usuario,
-    int? id_restaurante,
-    int? nota,
-    String? comentario,
-    String? data,
-  }) {
-    return Avaliacao(
-      id_avaliacao: id_avaliacao ?? this.id_avaliacao,
-      id_usuario: id_usuario ?? this.id_usuario,
-      id_restaurante: id_restaurante ?? this.id_restaurante,
-      nota: nota ?? this.nota,
-      comentario: comentario ?? this.comentario,
-      data: data ?? this.data,
-    );
   }
 }

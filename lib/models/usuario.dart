@@ -11,35 +11,21 @@ class Usuario {
     required this.senha,
   });
 
-  Map<String, dynamic> toMap() {
+  factory Usuario.fromJson(Map<String, dynamic> json) {
+    return Usuario(
+      id_usuario: json['id_usuario'],
+      nome: json['nome'],
+      email: json['email'],
+      senha: json['senha'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
     return {
       'id_usuario': id_usuario,
       'nome': nome,
       'email': email,
       'senha': senha,
     };
-  }
-
-  factory Usuario.fromMap(Map<String, dynamic> map) {
-    return Usuario(
-      id_usuario: map['id_usuario'],
-      nome: map['nome'],
-      email: map['email'],
-      senha: map['senha'],
-    );
-  }
-
-  Usuario copyWith({
-    int? id_usuario,
-    String? nome,
-    String? email,
-    String? senha,
-  }) {
-    return Usuario(
-      id_usuario: id_usuario ?? this.id_usuario,
-      nome: nome ?? this.nome,
-      email: email ?? this.email,
-      senha: senha ?? this.senha,
-    );
   }
 }

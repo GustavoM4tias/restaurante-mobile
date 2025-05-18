@@ -6,7 +6,7 @@ class ApiClient {
 
   factory ApiClient() => _instance;
 
-  final String baseUrl = 'https://api.seuapp.com'; // altere conforme necessário
+  final String baseUrl = 'https://api.restaurante.com';
   final Map<String, String> defaultHeaders = {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
