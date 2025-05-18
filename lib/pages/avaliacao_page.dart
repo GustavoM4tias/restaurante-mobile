@@ -1,30 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../services/avaliacao_service.dart';
+import '../providers/avaliacao_provider.dart';
 
 class AvaliacaoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => AvaliacaoService()..fetchAvaliacoes(),
+      create: (_) => AvaliacaoProvider()..fetchAvaliacoes(),
       child: Scaffold(
         appBar: AppBar(
           title: Text('Avaliações'),
         ),
-        body: Consumer<AvaliacaoService>(
-          builder: (context, service, _) {
-            if (service.isLoading) {
+        body: Consumer<AvaliacaoProvider>(
+          builder: (context, provider, _) {
+            if (provider.isLoading) {
               return Center(child: CircularProgressIndicator());
             }
 
-            if (service.errorMessage != null) {
-              return Center(child: Text('Erro: ${service.errorMessage}'));
+            if (provider.errorMessage != null) {
+              return Center(child: Text('Erro: ${provider.errorMessage}'));
             }
 
             return ListView.builder(
-              itemCount: service.avaliacoes.length,
+              itemCount: provider.avaliacoes.length,
               itemBuilder: (context, index) {
-                final avaliacao = service.avaliacoes[index];
+                final avaliacao = provider.avaliacoes[index];
                 return ListTile(
                   leading: Icon(Icons.star, color: Colors.amber),
                   title: Text('Nota: ${avaliacao.nota}'),

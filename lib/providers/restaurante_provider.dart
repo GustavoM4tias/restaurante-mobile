@@ -1,30 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import '../models/restaurante.dart';
+import '../services/restaurante_service.dart';
 
 class RestauranteProvider extends ChangeNotifier {
-  bool loading = false;
-  String? error;
-  List<dynamic> restaurantes = [];
+  final RestauranteService _service = RestauranteService();
+
+  List<Restaurante> _restaurantes = [];
+  bool _isLoading = false;
+  String? _error;
+
+  List<Restaurante> get restaurantes => _restaurantes;
+  bool get loading => _isLoading;
+  String? get error => _error;
 
   Future<void> fetchRestaurantes() async {
-    loading = true;
-    error = null;
+    _isLoading = true;
+    _error = null;
     notifyListeners();
 
     try {
-      final response =
-          await http.get(Uri.parse('https://api.restaurante.com/restaurantes'));
-      if (response.statusCode == 200) {
-        restaurantes = json.decode(response.body);
-      } else {
-        error = 'Erro ${response.statusCode}: ${response.reasonPhrase}';
-      }
+      _restaurantes = await _service.getRestaurantes();
     } catch (e) {
-      error = 'Erro ao carregar dados: $e';
+      _error = 'Erro ao carregar restaurantes: $e';
     }
 
-    loading = false;
+    _isLoading = false;
     notifyListeners();
   }
 }
