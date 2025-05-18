@@ -5,6 +5,7 @@ class Restaurante {
   final double longitude;
   final String faixa_preco;
   final String horario_funcionamento;
+  final String? descricao;
 
   Restaurante({
     this.id_restaurante,
@@ -13,6 +14,7 @@ class Restaurante {
     required this.longitude,
     required this.faixa_preco,
     required this.horario_funcionamento,
+    this.descricao,
   });
 
   factory Restaurante.fromJson(Map<String, dynamic> json) {
@@ -23,6 +25,7 @@ class Restaurante {
       longitude: (json['longitude'] as num).toDouble(),
       faixa_preco: json['faixa_preco'],
       horario_funcionamento: json['horario_funcionamento'],
+      descricao: json['descricao'],
     );
   }
 
@@ -34,6 +37,7 @@ class Restaurante {
       'longitude': longitude,
       'faixa_preco': faixa_preco,
       'horario_funcionamento': horario_funcionamento,
+      'descricao': descricao,
     };
   }
 }

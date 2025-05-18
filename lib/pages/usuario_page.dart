@@ -1,31 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/usuario.dart';
-import '../services/usuario_service.dart';
+import '../providers/usuario_provider.dart'; // ← aqui importa o provider
 
 class UsuarioPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => UsuarioService()..fetchUsuarios(),
+      create: (_) => UsuarioProvider()..fetchUsuarios(), // ← provider correto
       child: Scaffold(
         appBar: AppBar(
           title: Text('Usuários'),
         ),
-        body: Consumer<UsuarioService>(
-          builder: (context, service, _) {
-            if (service.isLoading) {
+        body: Consumer<UsuarioProvider>(
+          // ← consumer correto
+          builder: (context, provider, _) {
+            if (provider.isLoading) {
               return Center(child: CircularProgressIndicator());
             }
 
-            if (service.errorMessage != null) {
-              return Center(child: Text('Erro: ${service.errorMessage}'));
+            if (provider.errorMessage != null) {
+              return Center(child: Text('Erro: ${provider.errorMessage}'));
             }
 
             return ListView.builder(
-              itemCount: service.usuarios.length,
+              itemCount: provider.usuarios.length,
               itemBuilder: (context, index) {
-                final Usuario usuario = service.usuarios[index];
+                final Usuario usuario = provider.usuarios[index];
                 return ListTile(
                   leading: Icon(Icons.person),
                   title: Text(usuario.nome),
