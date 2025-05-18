@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'account_screen.dart';
 import 'history_screen.dart';
 import 'preferences_screen.dart';
@@ -68,8 +69,55 @@ class HomeContent extends StatelessWidget {
             ),
           ),
         ),
+        SizedBox(height: 20),
 
+        // Botões de navegação para entidades
+        _buildNavTile(
+          context,
+          icon: Icons.restaurant,
+          title: 'Restaurantes',
+          route: '/home/restaurantes',
+        ),
+        SizedBox(height: 12),
+        _buildNavTile(
+          context,
+          icon: Icons.local_dining,
+          title: 'Culinárias',
+          route: '/home/culinarias',
+        ),
+        SizedBox(height: 12),
+        _buildNavTile(
+          context,
+          icon: Icons.rate_review,
+          title: 'Avaliações',
+          route: '/home/avaliacoes',
+        ),
+        SizedBox(height: 12),
+        _buildNavTile(
+          context,
+          icon: Icons.people,
+          title: 'Usuários',
+          route: '/home/usuarios',
+        ),
       ],
+    );
+  }
+
+  Widget _buildNavTile(
+    BuildContext context, {
+    required IconData icon,
+    required String title,
+    required String route,
+  }) {
+    return ListTile(
+      leading: Icon(icon, color: Colors.red),
+      title: Text(title),
+      trailing: Icon(Icons.arrow_forward_ios, size: 16),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+      tileColor: Colors.white,
+      onTap: () => context.go(route),
     );
   }
 }

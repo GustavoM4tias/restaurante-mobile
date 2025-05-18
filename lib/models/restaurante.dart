@@ -15,7 +15,18 @@ class Restaurante {
     required this.horario_funcionamento,
   });
 
-  Map<String, dynamic> toMap() {
+  factory Restaurante.fromJson(Map<String, dynamic> json) {
+    return Restaurante(
+      id_restaurante: json['id_restaurante'],
+      nome: json['nome'],
+      latitude: (json['latitude'] as num).toDouble(),
+      longitude: (json['longitude'] as num).toDouble(),
+      faixa_preco: json['faixa_preco'],
+      horario_funcionamento: json['horario_funcionamento'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
     return {
       'id_restaurante': id_restaurante,
       'nome': nome,
@@ -24,34 +35,5 @@ class Restaurante {
       'faixa_preco': faixa_preco,
       'horario_funcionamento': horario_funcionamento,
     };
-  }
-
-  factory Restaurante.fromMap(Map<String, dynamic> map) {
-    return Restaurante(
-      id_restaurante: map['id_restaurante'],
-      nome: map['nome'],
-      latitude: map['latitude'],
-      longitude: map['longitude'],
-      faixa_preco: map['faixa_preco'],
-      horario_funcionamento: map['horario_funcionamento'],
-    );
-  }
-
-  Restaurante copyWith({
-    int? id_restaurante,
-    String? nome,
-    double? latitude,
-    double? longitude,
-    String? faixa_preco,
-    String? horario_funcionamento,
-  }) {
-    return Restaurante(
-      id_restaurante: id_restaurante ?? this.id_restaurante,
-      nome: nome ?? this.nome,
-      latitude: latitude ?? this.latitude,
-      longitude: longitude ?? this.longitude,
-      faixa_preco: faixa_preco ?? this.faixa_preco,
-      horario_funcionamento: horario_funcionamento ?? this.horario_funcionamento,
-    );
   }
 }
