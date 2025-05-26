@@ -15,7 +15,7 @@ class SQLiteCulinariaDAO implements CulinariaDAO {
   @override
   Future<int> insert(Culinaria culinaria) async {
     final db = await _dbHelper.database;
-    return await db.insert('culinaria', culinaria.toMap());
+    return await db.insert('culinaria', culinaria.toJson());
   }
 
   @override
@@ -27,14 +27,14 @@ class SQLiteCulinariaDAO implements CulinariaDAO {
       whereArgs: [id],
     );
     if (maps.isEmpty) return null;
-    return Culinaria.fromMap(maps.first);
+    return Culinaria.fromJson(maps.first);
   }
 
   @override
   Future<List<Culinaria>> findAll() async {
     final db = await _dbHelper.database;
     final maps = await db.query('culinaria', orderBy: 'tipo ASC');
-    return maps.map((map) => Culinaria.fromMap(map)).toList();
+    return maps.map((map) => Culinaria.fromJson(map)).toList();
   }
 
   @override
@@ -42,7 +42,7 @@ class SQLiteCulinariaDAO implements CulinariaDAO {
     final db = await _dbHelper.database;
     return await db.update(
       'culinaria',
-      culinaria.toMap(),
+      culinaria.toJson(),
       where: 'id_culinaria = ?',
       whereArgs: [culinaria.id_culinaria],
     );

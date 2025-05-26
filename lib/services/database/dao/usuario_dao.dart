@@ -16,7 +16,7 @@ class SQLiteUsuarioDAO implements UsuarioDAO {
   @override
   Future<int> insert(Usuario usuario) async {
     final db = await _dbHelper.database;
-    return await db.insert('usuario', usuario.toMap());
+    return await db.insert('usuario', usuario.toJson());
   }
 
   @override
@@ -28,14 +28,14 @@ class SQLiteUsuarioDAO implements UsuarioDAO {
       whereArgs: [id],
     );
     if (maps.isEmpty) return null;
-    return Usuario.fromMap(maps.first);
+    return Usuario.fromJson(maps.first);
   }
 
   @override
   Future<List<Usuario>> findAll() async {
     final db = await _dbHelper.database;
     final maps = await db.query('usuario', orderBy: 'nome ASC');
-    return maps.map((map) => Usuario.fromMap(map)).toList();
+    return maps.map((map) => Usuario.fromJson(map)).toList();
   }
 
   @override
@@ -47,7 +47,7 @@ class SQLiteUsuarioDAO implements UsuarioDAO {
       whereArgs: [email],
     );
     if (maps.isEmpty) return null;
-    return Usuario.fromMap(maps.first);
+    return Usuario.fromJson(maps.first);
   }
 
   @override
@@ -55,7 +55,7 @@ class SQLiteUsuarioDAO implements UsuarioDAO {
     final db = await _dbHelper.database;
     return await db.update(
       'usuario',
-      usuario.toMap(),
+      usuario.toJson(),
       where: 'id_usuario = ?',
       whereArgs: [usuario.id_usuario],
     );

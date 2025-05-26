@@ -15,7 +15,7 @@ class SQLiteRestauranteDAO implements RestauranteDAO {
   @override
   Future<int> insert(Restaurante restaurante) async {
     final db = await _dbHelper.database;
-    return await db.insert('restaurante', restaurante.toMap());
+    return await db.insert('restaurante', restaurante.toJson());
   }
 
   @override
@@ -27,14 +27,14 @@ class SQLiteRestauranteDAO implements RestauranteDAO {
       whereArgs: [id],
     );
     if (maps.isEmpty) return null;
-    return Restaurante.fromMap(maps.first);
+    return Restaurante.fromJson(maps.first);
   }
 
   @override
   Future<List<Restaurante>> findAll() async {
     final db = await _dbHelper.database;
     final maps = await db.query('restaurante', orderBy: 'nome ASC');
-    return maps.map((map) => Restaurante.fromMap(map)).toList();
+    return maps.map((map) => Restaurante.fromJson(map)).toList();
   }
 
   @override
@@ -42,7 +42,7 @@ class SQLiteRestauranteDAO implements RestauranteDAO {
     final db = await _dbHelper.database;
     return await db.update(
       'restaurante',
-      restaurante.toMap(),
+      restaurante.toJson(),
       where: 'id_restaurante = ?',
       whereArgs: [restaurante.id_restaurante],
     );

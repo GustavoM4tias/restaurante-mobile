@@ -15,7 +15,7 @@ class SQLiteAvaliacaoDAO implements AvaliacaoDAO {
   @override
   Future<int> insert(Avaliacao avaliacao) async {
     final db = await _dbHelper.database;
-    return await db.insert('avaliacao', avaliacao.toMap());
+    return await db.insert('avaliacao', avaliacao.toJson());
   }
 
   @override
@@ -27,14 +27,14 @@ class SQLiteAvaliacaoDAO implements AvaliacaoDAO {
       whereArgs: [id],
     );
     if (maps.isEmpty) return null;
-    return Avaliacao.fromMap(maps.first);
+    return Avaliacao.fromJson(maps.first);
   }
 
   @override
   Future<List<Avaliacao>> findAll() async {
     final db = await _dbHelper.database;
     final maps = await db.query('avaliacao', orderBy: 'data DESC');
-    return maps.map((map) => Avaliacao.fromMap(map)).toList();
+    return maps.map((map) => Avaliacao.fromJson(map)).toList();
   }
 
   @override
@@ -42,7 +42,7 @@ class SQLiteAvaliacaoDAO implements AvaliacaoDAO {
     final db = await _dbHelper.database;
     return await db.update(
       'avaliacao',
-      avaliacao.toMap(),
+      avaliacao.toJson(),
       where: 'id_avaliacao = ?',
       whereArgs: [avaliacao.id_avaliacao],
     );
