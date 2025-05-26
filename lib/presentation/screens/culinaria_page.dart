@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../providers/culinaria_provider.dart';
+import '../../providers/culinaria_provider.dart';
 
 class CulinariaPage extends StatelessWidget {
   @override

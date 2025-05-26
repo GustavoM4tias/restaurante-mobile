@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../providers/restaurante_provider.dart';
-import '../models/restaurante.dart';
+import '../../providers/restaurante_provider.dart';
+import '../../models/restaurante.dart';
 
 class RestaurantePage extends StatefulWidget {
   @override
