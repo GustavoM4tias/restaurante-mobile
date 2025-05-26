@@ -6,7 +6,7 @@ class Avaliacao {
   final String comentario;
   final String data;
 
-  Avaliacao({
+  const Avaliacao({
     this.id_avaliacao,
     required this.id_usuario,
     required this.id_restaurante,
@@ -26,14 +26,12 @@ class Avaliacao {
     );
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      'id_avaliacao': id_avaliacao,
-      'id_usuario': id_usuario,
-      'id_restaurante': id_restaurante,
-      'nota': nota,
-      'comentario': comentario,
-      'data': data,
-    };
-  }
+  Map<String, dynamic> toJson() => {
+        'id_avaliacao': id_avaliacao,
+        'id_usuario': id_usuario,
+        'id_restaurante': id_restaurante,
+        'nota': nota,
+        'comentario': comentario,
+        'data': data,
+      };
 }

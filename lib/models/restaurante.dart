@@ -7,7 +7,7 @@ class Restaurante {
   final String horario_funcionamento;
   final String? descricao;
 
-  Restaurante({
+  const Restaurante({
     this.id_restaurante,
     required this.nome,
     required this.latitude,
@@ -29,15 +29,13 @@ class Restaurante {
     );
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      'id_restaurante': id_restaurante,
-      'nome': nome,
-      'latitude': latitude,
-      'longitude': longitude,
-      'faixa_preco': faixa_preco,
-      'horario_funcionamento': horario_funcionamento,
-      'descricao': descricao,
-    };
-  }
+  Map<String, dynamic> toJson() => {
+    'id_restaurante': id_restaurante,
+    'nome': nome,
+    'latitude': latitude,
+    'longitude': longitude,
+    'faixa_preco': faixa_preco,
+    'horario_funcionamento': horario_funcionamento,
+    'descricao': descricao,
+  };
 }

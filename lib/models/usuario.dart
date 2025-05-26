@@ -4,7 +4,7 @@ class Usuario {
   final String email;
   final String senha;
 
-  Usuario({
+  const Usuario({
     this.id_usuario,
     required this.nome,
     required this.email,
@@ -20,12 +20,10 @@ class Usuario {
     );
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      'id_usuario': id_usuario,
-      'nome': nome,
-      'email': email,
-      'senha': senha,
-    };
-  }
+  Map<String, dynamic> toJson() => {
+    'id_usuario': id_usuario,
+    'nome': nome,
+    'email': email,
+    'senha': senha,
+  };
 }
