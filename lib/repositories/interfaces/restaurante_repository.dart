@@ -40,4 +40,6 @@ class RestauranteRepository {
       throw StateError('Restaurante não encontrado');
     }
   }
+
+  fetchRestaurantes() {}
 }

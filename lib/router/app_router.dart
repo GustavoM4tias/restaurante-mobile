@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 // Telas principais
-import '../screens/login_screen.dart';
-import '../screens/home_screen.dart';
-import '../screens/account_screen.dart';
-import '../screens/history_screen.dart';
-import '../screens/preferences_screen.dart';
+import '../presentation/screens/login_screen.dart';
+import '../presentation/screens/home_screen.dart';
+import '../presentation/screens/account_screen.dart';
+import '../presentation/screens/history_screen.dart';
+import '../presentation/screens/preferences_screen.dart';
 
 // Páginas de entidades
-import '../pages/restaurante_page.dart';
-import '../pages/culinaria_page.dart';
-import '../pages/avaliacao_page.dart';
-import '../pages/usuario_page.dart';
+import '../presentation/screens/restaurante_page.dart';
+import '../presentation/screens/culinaria_page.dart';
+import '../presentation/screens/avaliacao_page.dart';
+import '../presentation/screens/usuario_page.dart';
 
 final GoRouter appRouter = GoRouter(
   initialLocation: '/',

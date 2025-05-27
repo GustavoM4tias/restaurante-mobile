@@ -40,4 +40,6 @@ class CulinariaRepository {
       throw StateError('Culinária não encontrada');
     }
   }
+
+  fetchCulinarias() {}
 }

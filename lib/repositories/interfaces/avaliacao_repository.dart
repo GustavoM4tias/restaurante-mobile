@@ -44,4 +44,6 @@ class AvaliacaoRepository {
       throw StateError('Avaliação não encontrada');
     }
   }
+
+  fetchAvaliacoes() {}
 }

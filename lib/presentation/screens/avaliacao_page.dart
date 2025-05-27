@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../providers/avaliacao_provider.dart';
+import '../../providers/avaliacao_provider.dart';
 
 class AvaliacaoPage extends StatelessWidget {
   @override

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../models/usuario.dart';
-import '../providers/usuario_provider.dart'; // ← aqui importa o provider
+import '../../models/usuario.dart';
+import '../../providers/usuario_provider.dart'; // ← aqui importa o provider
 
 class UsuarioPage extends StatelessWidget {
   @override
