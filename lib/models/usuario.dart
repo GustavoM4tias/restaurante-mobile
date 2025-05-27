@@ -26,4 +26,6 @@ class Usuario {
     'email': email,
     'senha': senha,
   };
+
+  fetchUsuarios() {}
 }
